@@ -14,7 +14,7 @@ export class TasksService {
   async create(createTaskInput: CreateTaskInput) {
     let dependency = null;
     if (createTaskInput.dependency) {
-      dependency = await this.findOne(createTaskInput.dependency)[0];
+      dependency = await this.findOne(createTaskInput.dependency);
       if (!dependency)
         throw new HttpException('Task not found', HttpStatus.BAD_REQUEST);
     }
