@@ -9,6 +9,7 @@ import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
 import { TasksModule } from './tasks/tasks.module';
 import { Task } from './tasks/entities/task.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { Task } from './tasks/entities/task.entity';
     }),
     UsersModule,
     TasksModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

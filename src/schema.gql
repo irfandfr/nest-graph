@@ -33,18 +33,13 @@ type Query {
 }
 
 type Mutation {
-  createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
   createTask(createTaskInput: CreateTaskInput!): Task!
   updateTask(updateTaskInput: UpdateTaskInput!): Task!
   removeTask(id: Int!): Task!
-}
-
-input CreateUserInput {
-  email: String!
-  password: String!
-  role: String!
+  signIn(authPayload: AuthPayload!): User!
+  signUp(createUserInput: CreateUserInput!): User!
 }
 
 input UpdateUserInput {
@@ -73,4 +68,15 @@ input UpdateTaskInput {
   description: String
   dependency: Int
   id: Int!
+}
+
+input AuthPayload {
+  email: String!
+  password: String!
+}
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  role: String!
 }

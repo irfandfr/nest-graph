@@ -4,6 +4,7 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { encodeString } from 'src/utils/bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -12,7 +13,8 @@ export class UsersService {
   ){}
 
   create(createUserInput: CreateUserInput) {
-    return this.usersRepository.save({...createUserInput});
+    const password = encodeString(createUserInput.password)
+    return this.usersRepository.save({...createUserInput, password});
   }
 
   findAll() {
@@ -26,10 +28,13 @@ export class UsersService {
   findOne(id: number) {
     return this.usersRepository.findOne({
       where: {id},
-      select:{
-        password: false
-      }
     });
+  }
+
+  findEmail(email: string){
+    return this.usersRepository.findOne({
+      where: {email},
+    })
   }
 
   update(id: number, updateUserInput: UpdateUserInput) {
