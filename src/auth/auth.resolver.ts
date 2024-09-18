@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { UnauthorizedException } from '@nestjs/common';
 import { CreateUserInput } from 'src/users/dto/create-user.input';
 import { UsersService } from 'src/users/users.service';
+import { AuthResponse } from './dto/auth.response';
 
 @Resolver()
 export class AuthResolver {
@@ -13,13 +14,13 @@ export class AuthResolver {
     private readonly userService : UsersService
   ){}
 
-  @Mutation(() => User)
+  @Mutation(() => AuthResponse)
   async signIn(@Args('authPayload') authPayload: AuthPayload) {
     const user =  await this.authService.validateAuth({email:authPayload.email, password: authPayload.password});
     if(user === null){
       throw new UnauthorizedException()
     }else{
-      return user
+      return this.authService.signIn(user.id, user.email, user.role)
     }
   }
 

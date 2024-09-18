@@ -24,6 +24,10 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type AuthResponse {
+  access_token: String!
+}
+
 type Query {
   users: [User!]!
   user(id: Int!): User!
@@ -38,7 +42,7 @@ type Mutation {
   createTask(createTaskInput: CreateTaskInput!): Task!
   updateTask(updateTaskInput: UpdateTaskInput!): Task!
   removeTask(id: Int!): Task!
-  signIn(authPayload: AuthPayload!): User!
+  signIn(authPayload: AuthPayload!): AuthResponse!
   signUp(createUserInput: CreateUserInput!): User!
 }
 
