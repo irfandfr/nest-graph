@@ -26,8 +26,10 @@ export class Task{
   taskDependency? : Task
 
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
+  @Field(() => Date)
   createdAt: Date;
 
   @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
+  @Field(() => Date)
   updatedAt: Date;
 }

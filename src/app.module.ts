@@ -3,11 +3,12 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { UserResolver } from './graphql/resolvers/UserResolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './graphql/models/User';
-import { Task } from './graphql/models/Task';
 import { ConfigModule } from '@nestjs/config';
+import { UsersModule } from './users/users.module';
+import { User } from './users/entities/user.entity';
+import { TasksModule } from './tasks/tasks.module';
+import { Task } from './tasks/entities/task.entity';
 
 @Module({
   imports: [
@@ -26,8 +27,10 @@ import { ConfigModule } from '@nestjs/config';
       entities: [User, Task],
       synchronize: true,
     }),
+    UsersModule,
+    TasksModule,
   ],
   controllers: [AppController],
-  providers: [AppService, UserResolver],
+  providers: [AppService],
 })
 export class AppModule {}
