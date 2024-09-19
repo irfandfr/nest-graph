@@ -4,6 +4,7 @@ import { Task } from './entities/task.entity';
 import { CreateTaskInput } from './dto/create-task.input';
 import { UpdateTaskInput } from './dto/update-task.input';
 import { Public } from 'src/decorators/public.decorator';
+import { Roles } from 'src/decorators/role.decorator';
 
 @Resolver(() => Task)
 export class TasksResolver {
@@ -39,6 +40,7 @@ export class TasksResolver {
     return this.tasksService.update(updateTaskInput);
   }
 
+  @Roles('admin')
   @Mutation(() => Task)
   removeTask(@Args('id', { type: () => Int }) id: number) {
     return this.tasksService.remove(id);
