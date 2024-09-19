@@ -5,6 +5,7 @@ import { User } from './entities/user.entity';
 import { UpdateUserInput } from './dto/update-user.input';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
+import { Roles } from 'src/decorators/role.decorator';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -25,7 +26,8 @@ export class UsersResolver {
     return this.usersService.update(updateUserInput.id, updateUserInput);
   }
   
-  @Mutation(() => User)
+  @Roles('admin')
+  @Mutation(() => Boolean)
   removeUser(@Args('id', { type: () => Int }) id: number) {
     return this.usersService.remove(id);
   }
