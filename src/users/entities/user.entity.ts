@@ -17,7 +17,7 @@ export class User{
   @Field()
   password: string
 
-  @Column()
+  @Column({type: 'text', default: "user"})
   @Field({nullable: true})
   role: string
 }
