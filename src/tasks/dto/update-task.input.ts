@@ -7,7 +7,7 @@ export class UpdateTaskInput extends PartialType(CreateTaskInput) {
   id: number;
 
   @Field({nullable:true})
-  status: 'done' | 'open' | 'in-progress'
+  status?: 'done' | 'open' | 'in-progress'
 
   @Field(() => Int, {nullable: true})
   dependency?: number;
