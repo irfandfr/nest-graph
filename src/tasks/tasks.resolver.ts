@@ -35,14 +35,15 @@ export class TasksResolver {
   }
   
 
-  @Mutation(() => Task)
+  @Mutation(() => Task, {nullable: true})
   updateTask(@Args('updateTaskInput') updateTaskInput: UpdateTaskInput) {
     return this.tasksService.update(updateTaskInput);
   }
 
   @Roles('admin')
-  @Mutation(() => Task)
-  removeTask(@Args('id', { type: () => Int }) id: number) {
-    return this.tasksService.remove(id);
+  @Mutation(() => Boolean, {nullable: true})
+  async removeTask(@Args('id', { type: () => Int }) id: number) {
+    const res =  await this.tasksService.remove(id);
+    return res
   }
 }
