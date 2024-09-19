@@ -24,12 +24,26 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+A Simple task management API with GraphQL with TypeORM and PostgreSQL made inn Nest.js
 
 ## Project setup
 
+Since this project uses PostgresSQL as the Database, please make sure to install and setup your Postgres database before hand, download the installed [here](https://www.postgresql.org/) if you haven't.
+Make sure to connect to the server and create the database to connect with the app.
+
 ```bash
 $ npm install
+```
+
+setup your local environment, you can see the example in the ``local.env`` file
+
+```bash
+DB_HOST=YOUR_HOST
+DB_PORT=YOUR_HOST_PORT
+DB_USERNAME=YOU_DATABASE_USER_NAME
+DB_PASSWORD=YOUR_DATABASE_USER_PASSWORD
+DB_NAME=YOUR_DATABASE_NAME
+JWT_SECRET_KEY=YOUR_JWT_SECRET_KEY
 ```
 
 ## Compile and run the project
@@ -45,18 +59,6 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
 
 ## Resources
 

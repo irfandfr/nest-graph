@@ -38,8 +38,9 @@ type Query {
 
 type Mutation {
   updateUser(updateUserInput: UpdateUserInput!): User!
-  removeUser(id: Int!): User!
+  removeUser(id: Int!): Boolean!
   createTask(createTaskInput: CreateTaskInput!): Task!
+  removeDependency(id: Int!): String!
   updateTask(updateTaskInput: UpdateTaskInput!): Task
   removeTask(id: Int!): Boolean
   signIn(authPayload: AuthPayload!): AuthResponse!
@@ -60,7 +61,7 @@ input CreateTaskInput {
   """Task's description"""
   description: String!
 
-  """Task's dependency"""
+  """Another tasks's ID to add to the current tasks dependency"""
   dependency: Int
 }
 
