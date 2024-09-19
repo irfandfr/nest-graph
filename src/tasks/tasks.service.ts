@@ -32,11 +32,12 @@ export class TasksService {
     ).sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
   }
 
-  findOne(id: number) {
-    return this.taskRepository.findOne({
+  async findOne(id: number) {
+    const task = await this.taskRepository.findOne({
       where: { id },
       relations: ['taskDependency'],
     });
+    return task
   }
 
   /**
@@ -55,6 +56,11 @@ export class TasksService {
     });
   }
 
+  /**
+   * Find all task with that is ready to be worked on
+   * Task that has a status of not 'done' and Task that don't have unfinished status
+   * @returns {Promise<Task[]>} List of tasks
+   */
   async findReady() {
     const openTasks = await this.taskRepository.find({
       where: {
@@ -71,7 +77,8 @@ export class TasksService {
 
 
   async update(updateTaskInput: UpdateTaskInput): Promise<Task> {
-    if (this.findOne(updateTaskInput.id)) {
+    const task = await this.findOne(updateTaskInput.id)
+    if (!task) {
       throw new HttpException('Task not found', HttpStatus.BAD_REQUEST);
     }
 
@@ -95,9 +102,27 @@ export class TasksService {
     delete updateTaskInput.dependency;
     await this.taskRepository.update(updateTaskInput.id, {
       ...updateTaskInput,
-      taskDependency: dependency,
+      taskDependency: dependency || task.taskDependency,
     });
     return this.findOne(updateTaskInput.id);
+  }
+
+  /**
+   * Remove a dependency from a task
+   * @param id Task's ID
+   */
+  async removeDependency(id: number){
+    const task = await this.findOne(id)
+    if(!task){
+      throw new HttpException('Task not found', HttpStatus.BAD_REQUEST);
+    } else if(!task.taskDependency){
+      throw new HttpException('Task does not have a dependency', HttpStatus.BAD_REQUEST);
+    }
+    const res = await this.taskRepository.update(id, {
+      ...task,
+      taskDependency: null,
+    });
+    return res?.affected > 0
   }
 
   
@@ -106,7 +131,7 @@ export class TasksService {
     const dependedTask = await this.findByTaskDependencyID(id);
     if (dependedTask.length > 0) {
       dependedTask.forEach((task) => {
-        this.update({ id: task.id });
+        this.removeDependency(task.id)
       });
     }
     const result = await this.taskRepository.delete({ id });
