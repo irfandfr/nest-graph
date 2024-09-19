@@ -8,6 +8,6 @@ export class CreateTaskInput {
   @Field({description: `Task's description`})
   description: string
 
-  @Field(() => Int,{description: `Task's dependency`, nullable: true})
+  @Field(() => Int,{description: `Another tasks's ID to add to the current tasks dependency`, nullable: true})
   dependency: number
 }
