@@ -9,13 +9,7 @@ import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
 @Resolver(() => User)
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
-
-  // @Mutation(() => User)
-  // createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
-  //   return this.usersService.create(createUserInput);
-  // }
-
-  @UseGuards(GqlAuthGuard)
+  
   @Query(() => [User], { name: 'users' })
   findAll() {
     return this.usersService.findAll();
