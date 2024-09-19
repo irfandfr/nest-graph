@@ -40,8 +40,8 @@ type Mutation {
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
   createTask(createTaskInput: CreateTaskInput!): Task!
-  updateTask(updateTaskInput: UpdateTaskInput!): Task!
-  removeTask(id: Int!): Task!
+  updateTask(updateTaskInput: UpdateTaskInput!): Task
+  removeTask(id: Int!): Boolean
   signIn(authPayload: AuthPayload!): AuthResponse!
   signUp(createUserInput: CreateUserInput!): User!
 }
@@ -72,6 +72,7 @@ input UpdateTaskInput {
   description: String
   dependency: Int
   id: Int!
+  status: String
 }
 
 input AuthPayload {
@@ -82,5 +83,5 @@ input AuthPayload {
 input CreateUserInput {
   email: String!
   password: String!
-  role: String!
+  role: String
 }
