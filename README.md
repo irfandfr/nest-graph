@@ -32,11 +32,13 @@ Ensure you have a PostgreSQL database set up. If you don't have one already, you
 
 Once installed, connect to the PostgreSQL server and create a database specifically for this project.
 
+Before running the project install all the neccesary packages.
+
 ```bash
 $ npm install
 ```
 
-setup your local environment, you can see the example in the ``local.env`` file
+Before running the project, setup your local environment, you can see the example in the ``local.env`` file
 
 ```bash
 DB_HOST=YOUR_HOST
