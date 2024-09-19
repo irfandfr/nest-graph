@@ -8,6 +8,6 @@ export class CreateUserInput {
   @Field()
   password: string;
 
-  @Field()
+  @Field({nullable: true})
   role: string
 }
