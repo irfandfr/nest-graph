@@ -32,7 +32,13 @@ Ensure you have a PostgreSQL database set up. If you don't have one already, you
 
 Once installed, connect to the PostgreSQL server and create a database specifically for this project.
 
-Before running the project install all the neccesary packages.
+It is recommended to install Nest.js CLI on your terminal.
+
+```bash
+$ npm i -g @nestjs/cli
+```
+
+Install all the neccesary packages for this project.
 
 ```bash
 $ npm install
