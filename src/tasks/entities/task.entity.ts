@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType } from "@nestjs/graphql";
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({name: 'tasks'})
 @ObjectType()
@@ -20,7 +20,7 @@ export class Task{
   @Field()
   status: 'open' | 'in-progress' | 'done';
 
-  @OneToOne(() => Task)
+  @ManyToOne(() => Task)
   @JoinColumn()
   @Field(() => Task,{nullable:true})
   taskDependency? : Task
