@@ -28,8 +28,9 @@ A Simple task management API with GraphQL with TypeORM and PostgreSQL made inn N
 
 ## Project setup
 
-Since this project uses PostgresSQL as the Database, please make sure to install and setup your Postgres database before hand, download the installed [here](https://www.postgresql.org/) if you haven't.
-Make sure to connect to the server and create the database to connect with the app.
+Ensure you have a PostgreSQL database set up. If you don't have one already, you can download and install PostgreSQL from the official website: [here](https://www.postgresql.org/download/).
+
+Once installed, connect to the PostgreSQL server and create a database specifically for this project.
 
 ```bash
 $ npm install
