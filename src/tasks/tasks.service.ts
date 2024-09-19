@@ -38,7 +38,10 @@ export class TasksService {
   }
 
   findOne(id: number) {
-    return this.taskRepository.findOneBy({ id });
+    return this.taskRepository.findOne({ 
+      where: {id}, 
+      relations: ['taskDependency'] 
+    });
   }
 
   async findReady() {
@@ -47,13 +50,10 @@ export class TasksService {
         status : 'open',
       },
       relations: ['taskDependency'],
-      select:{
-        taskDependency:{
-          id: true
-        }
-      }
     });
-    return openTasks.filter((t) => !t.taskDependency || (t.taskDependency.status === 'done'))
+    const tasks = openTasks.filter((t) => !t.taskDependency || (t.taskDependency?.status === 'done'))
+    // sort by time
+    return tasks.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
   }
 
   async update(updateTaskInput: UpdateTaskInput) {
@@ -64,13 +64,15 @@ export class TasksService {
         throw new HttpException('Task not found', HttpStatus.BAD_REQUEST);
     }
     delete updateTaskInput.dependency;
-    return this.taskRepository.update(updateTaskInput.id, {
+    await this.taskRepository.update(updateTaskInput.id, {
       ...updateTaskInput,
       taskDependency: dependency,
     });
+    return this.findOne(updateTaskInput.id)
   }
 
-  remove(id: number) {
-    return this.taskRepository.delete(id);
+  async remove(id: number) : Promise<boolean>{
+    const result = await this.taskRepository.delete({ id });
+    return result.affected > 0;
   }
 }
